@@ -8,4 +8,3 @@ ALTER USER SCOTT TEMPORARY TABLESPACE TEMP;
 ALTER USER SCOTT QUOTA 10M ON USERS;
 
 alter session set "_oracle_script"=true;
-
