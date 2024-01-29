@@ -1348,19 +1348,78 @@ COMMIT;
 -- UPDATE 테이블명 SET 수정할 내용,...,... WHERE 조건 ;
 
 -- WHERE 안쓰고 UPDATE 시 할꺼냐고 주의 메세지를 줌
-UPDATE EXAM_EMP SET DEPTNO=70
-WHERE SAL > (SELECT AVG(SAL) 
-FROM EXAM_EMP
-WHERE DEPTNO = 50);
+UPDATE
+	EXAM_EMP
+SET
+	DEPTNO = 70
+WHERE
+	SAL > (
+	SELECT
+		AVG(SAL)
+	FROM
+		EXAM_EMP
+	WHERE
+		DEPTNO = 50);
 
 -- [실습4] EXAM_EMP에 속한 사원 중 60번 부서의 사원 중에서 입사일이 가장
 -- 빠른 사원보다 늦게 입사한 사원의 급여를 10% 인상하고 80번 부서로 옮기는
 -- SQL 문 작성하기
-SELECT *
-FROM EXAM_EMP
-WHERE MIN(HIREDATE) < (SELECT HIREDATE
-FROM EXAM_EMP
-WHERE DEPTNO =60);
+UPDATE
+	EXAM_EMP
+SET
+	SAL = SAL * 1.1,
+	DEPTNO = 80
+WHERE
+	HIREDATE > (
+	SELECT
+		MIN(HIREDATE)
+	FROM
+		EXAM_EMP
+	WHERE
+		DEPTNO = 60);
 
-SELECT MIN(HIREDATE) 
-FROM EXAM_EMP;
+-- [실습5] EXAM_EMP에 속한 사원 중, 급여 등급이 5인 사원을 삭제하는 SQL
+-- 문을 작성하기
+DELETE
+FROM
+	EXAM_EMP
+WHERE
+	empno IN (
+	SELECT
+		empno
+	FROM
+		EXAM_EMP,
+		SALGRADE
+	WHERE
+		sal BETWEEN losal AND hisal
+		AND grade = 5);
+
+-- TRANSACTION
+-- 하나의 작업 또는 밀접하게 연관되어 있는 작업 수행을 위해 나눌 수 없는 최소 작업 단위
+-- 트랜잭션 최종반영(COMMIT) / 트랜잭션 모두취소(ROLLBACK)
+	
+-- DBEAVER 설정에서 커밋 모드 변경가능(데이터베이스-트랜잭션모드-매뉴얼커밋)
+-- 기본은 AUTO COMMIT 상태임
+INSERT INTO DEPT_TEMP VALUES(55,'NETWORK','SEOUL');
+UPDATE DEPT_TEMP SET LOC='BUSAN' WHERE DEPTNO =55;
+
+COMMIT;
+ROLLBACK; -- COMMIT 하기 전에 할수있음
+
+SELECT * FROM DEPT_TEMP dt ;
+
+DELETE FROM DEPT_TEMP dt WHERE DEPTNO=55;
+UPDATE DEPT_TEMP SET DNAME ='WEB' WHERE DEPTNO =10;
+
+COMMIT;
+
+-- LOCK -> 한 세션에서 트랜잭션 작업이 완료되지 않으면
+--           다른 세션에서 작업을 처리할수 없는 상태
+--           (DML - insert, update, delete)
+
+
+
+-- 테이블 정의, 사용자 정의, 권한 부여, 권한 취소
+
+
+
