@@ -522,7 +522,13 @@ WHERE D.LOCATION_ID = 1700));
 SELECT * FROM EMPLOYEES e WHERE FIRST_NAME = 'Jack';
 
 -- 테이블 생성 - 구조, 데이터 복사
-CREATE TABLE idx_employees AS select DISTINCT first_name, last_name, hire_date FROM employees;
+CREATE TABLE idx_employees AS
+SELECT
+	DISTINCT first_name,
+	last_name,
+	hire_date
+FROM
+	employees;
 
 -- index 생성
 CREATE INDEX idx_name ON idx_employees(first_name);

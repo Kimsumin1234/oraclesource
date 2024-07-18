@@ -290,15 +290,15 @@ WHERE DEPTNO = 10;
 -- 대소문자 변경 
 SELECT *
 FROM EMP e 
-WHERE ENAME = 'clark'; (x)
+WHERE ENAME = 'clark'; -- (x)
 
 SELECT *
 FROM EMP e 
-WHERE LOWER(ENAME)= 'clark'; (o)
+WHERE LOWER(ENAME)= 'clark'; -- (o)
 
 SELECT *
 FROM EMP e 
-WHERE ENAME = UPPER('clark'); (o)
+WHERE ENAME = UPPER('clark'); -- (o)
 
 -- UPPER(문자열) : 괄호 안 문자를 모두 대문자로 변환하여 반환
 -- LOWER(문자열) : 괄호 안 문자를 모두 소문자로 변환하여 반환
@@ -1420,45 +1420,34 @@ DELETE FROM DEPT_TEMP WHERE deptno=90;
 COMMIT;
 
 -- 테이블 정의, 사용자 정의, 권한 부여, 권한 취소
-
 -----------------------------------------------------------------------------------------------------------
-
 -- SQL - 1. DDL (정의)   2. DML - select, insert, update, delete  3. DCL (권한부여)
-
 -- 데이터 정의어 (DDL)
 -- 테이블 정의, 사용자 정의, 권한 부여(취소)
 -- CREATE
-
 -- 1. 테이블 생성
 -- CREATE TABLE 테이블명(
 --   필드명 필드타입(크기) 제약조건,
 -- )
-
 -- 열 이름 규칙
 -- 문자로 시작 / 30byte 이하로 작성 / 한 테이블 안 열 이름 중복 불가
 -- 열 이름은 문자, 0-9, 특수문자($, #, _) 사용 가능
 -- sql 키워드는 열 이름으로 사용 불가(order, group, select...)
-
 -- 문자
 --  1) CHAR 2) VARCHAR2  3) NCHAR  4) NVARCHAR2 5) CLOB  6) NCLOB  7) LONG
 --  char or varchar : 열의 너비가 고정값인지 가변인지
 --  char(10)  :  'hong' => 10자리 다 사용
 --  varchar2(10) : 'hong' => 입력된 글자에 따라 가변
-
 --  varchar2, char 가 한글,영문 입력 시 사용하는 바이트 수가 다름
 --  nchar, nvarchar 사용하는 바이트 수 통일해서 사용
 --  nchar(10) : 'hong'  => 유니코드 문자열 타입이고, 고정
 --  nvarchar2(10) : 'hong'  =>  유니코드 문자열 타입이고, 가변
-
 --  CLOB : 문자열 데이터를 외부 파일로 저장
 --         엄청 많은 텍스트 데이터 입력 시 사용(4 기가)
-
 -- LONG : 2기가
-
 -- 숫자
 --  NUMBER(전체자릿수, 소수점자릿수)
 --  BINARY_FLOAT, BINARY_DOUBLE
-
 -- 날짜
 -- DATE, TIMESTAMP
 CREATE TABLE EMP_DDL(	
@@ -1467,8 +1456,10 @@ CREATE TABLE EMP_DDL(
 	JOB VARCHAR2(9),
 	MGR NUMBER(4),
 	HIREDATE DATE,
-	SAL NUMBER(7,2),
-	COMM NUMBER(7,2),
+	SAL NUMBER(7,
+2),
+	COMM NUMBER(7,
+2),
 	DEPTNO NUMBER(2)
 );
 
@@ -1476,9 +1467,13 @@ SELECT * FROM emp_ddl;
 
 -- 기본 테이블 열 구조와 데이터 복사해서 새 테이블 생성
 CREATE TABLE EXAM_EMP AS SELECT * FROM EMP;
+SELECT * FROM  EMP ;
+SELECT * FROM  EXAM_EMP ;
 
 -- 기본 테이블 열 구조만 복사해서 새 테이블 생성
 CREATE TABLE EMP_TEMP2 AS SELECT * FROM EMP WHERE 1<>1;
+SELECT * FROM EMP_TEMP2 ;
+
 
 -- DDL : CREATE, ALTER
 -- 2. 테이블 변경
